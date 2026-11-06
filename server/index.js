@@ -3,15 +3,18 @@ import express from "express"
 import mongoose from "mongoose";
 const app = express();
 import notes from "./models/notes.ts";
+import cors from "cors"
 
 app.use(express.json());
+app.use(cors())
 
 app.get("/", (req, res) => {
   res.send("API is running...");
 });
 
 app.post("/api/notes", async (req, res)=>{
-  const {title, content} = await req.json()
+  console.log(req.body)
+  const {title, content} = await req.body
   const newNotes = new notes({
     title: title,
     content: content
@@ -50,3 +53,10 @@ app.listen(PORT, () =>{
   mongoose.connect("mongodb://localhost:27017/")
   console.log(`Server running on port ${PORT}`)
 });
+
+
+const arr = [[1,2,3], 1]
+const arr2 = [...arr]
+arr2[0][1] = 3
+
+arr3 = JSON.parse(JSON.stringify(arr))
